@@ -1,15 +1,13 @@
-# server/api_config.yaml
 data:
-  csv_path: data/QA.csv
-
-columns:
-  question: "คำถาม "
-  answer: "คำตอบ"
-  module: "Module"
+  csv_path: ../Demo_Onnx/data/QA.csv
+  encoding: cp874
 
 index:
-  corpus_pkl: outputs/corpus_embeds.pkl
+  corpus_pkl: ../Demo_Onnx/outputs/corpus_embeds.pkl
 
 runtime:
-  onnx_dir: onnx_path
-  tokenizer_dir: onnx_path
+  onnx_dir: ../Demo_Onnx/onnx_path
+  tokenizer_dir: ../Demo_Onnx/onnx_path
+
+feedback:
+  csv_path: data/user_feedback.csv

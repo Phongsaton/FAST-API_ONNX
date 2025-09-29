@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <title>Bot Train 1.3.1 — Chat Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/css/style.css?v=20250924-3" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Bot Train <span class="ver">1.3.1</span></h1>
+      <div class="toolbar">
+        <div class="alpha-wrap">
+          <label for="alpha">α</label>
+          <input id="alpha" type="range" min="0" max="1" step="0.05" value="0.30" />
+          <span id="alphaValue" class="badge">0.30</span>
+        </div>
+        <button id="btn-health" class="btn">ตรวจสุขภาพ</button>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- Left: Chat -->
+      <section class="card chat">
+        <div id="chatLog" class="chat-log">
+          <!-- บอททักทายแรกเข้า -->
+          <div class="msg bot">
+            <div class="bubble">
+              สวัสดีครับ หากคำตอบไม่ตรงหรือแก้ปัญหาไม่ได้เราจะติดต่อกลับให้เร็วที่สุด
+            </div>
+          </div>
+        </div>
+
+        <form id="chatForm" class="chat-input">
+          <input id="q" class="input" type="text" placeholder="พิมพ์คำถาม เช่น ใบขอซื้อ คืออะไร / ขั้นตอนทำอย่างไร ..." />
+          <button id="btn-search" class="btn btn-primary" type="submit">ส่ง</button>
+        </form>
+
+        <div class="status-row"><span id="status">พร้อม</span></div>
+      </section>
+
+      <!-- Right: Alternatives (2..K) -->
+      <aside class="card alt">
+        <div class="alt-head">
+          <h2>ตัวเลือกอื่น (2–K)</h2>
+          <div class="hint">คลิกเพื่อส่งเข้าแชท</div>
+        </div>
+        <ul id="altList" class="alt-list"></ul>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <small>© 2025 Bot Train</small>
+    </footer>
+
+    <script src="/static/js/app.js?v=20250924-3"></script>
+  </body>
+</html>

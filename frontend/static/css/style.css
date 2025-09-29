@@ -1,0 +1,114 @@
+/* ===== Theme (ใกล้เคียงของเดิม) ===== */
+:root{
+  --bg:#0c1117;
+  --panel:#111827;
+  --border:#1f2937;
+  --text:#e5edf5;
+  --muted:#9aa3b2;
+  --primary:#2563eb;
+  --primary-2:#1d4ed8;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:linear-gradient(180deg,#0c1117 0%,#0a0f15 90%);
+  color:var(--text);
+  font:14px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Thai",Arial;
+}
+
+/* ===== Topbar ===== */
+.topbar{
+  position:sticky;top:0;z-index:10;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.75rem 1rem;border-bottom:1px solid var(--border);
+  background:rgba(12,17,23,.8);backdrop-filter:blur(6px);
+}
+.topbar h1{margin:0;font-weight:700;font-size:1.1rem}
+.topbar .ver{opacity:.8;font-weight:600;margin-left:.35rem}
+.toolbar{display:flex;align-items:center;gap:.75rem}
+.alpha-wrap{display:flex;align-items:center;gap:.5rem}
+.alpha-wrap label{color:var(--muted)}
+.alpha-wrap input[type=range]{width:180px}
+.badge{
+  display:inline-block;min-width:3ch;text-align:center;
+  background:#0f1623;border:1px solid var(--border);
+  padding:.2rem .45rem;border-radius:.4rem;color:var(--muted)
+}
+.btn{
+  border:1px solid var(--border);background:#0f1623;color:var(--text);
+  padding:.5rem .8rem;border-radius:.5rem;cursor:pointer
+}
+.btn:hover{background:#111b2a}
+.btn-primary{background:var(--primary);border-color:transparent}
+.btn-primary:hover{background:var(--primary-2)}
+
+/* ===== Layout ===== */
+.grid{
+  display:grid;grid-template-columns:1.15fr .85fr;gap:1rem;
+  max-width:1200px;margin:0 auto;padding:1rem
+}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:.8rem;overflow:hidden}
+.card.chat{display:flex;flex-direction:column}
+
+/* ===== Chat ===== */
+.chat-log{
+  height:60vh;overflow-y:auto;padding:1rem 1rem .75rem;
+  border-bottom:1px solid var(--border)
+}
+.msg{display:flex;margin:.35rem 0}
+.msg.user{justify-content:flex-end}
+.msg .bubble{
+  max-width:80%;padding:.6rem .75rem;border-radius:.75rem;
+  background:#0f1623;border:1px solid var(--border)
+}
+.msg.user .bubble{background:#0e1b2d;border-color:#243143}
+.msg.bot .bubble{background:#0f1521;border-color:#20283a}
+.msg .meta{
+  margin:.25rem .5rem 0;color:var(--muted);font-size:.85rem
+}
+
+/* input row */
+.chat-input{display:grid;grid-template-columns:1fr auto;gap:.5rem;padding:.75rem}
+.input{
+  width:100%;background:#0e131c;border:1px solid var(--border);
+  color:var(--text);padding:.6rem .75rem;border-radius:.55rem;outline:none
+}
+.input::placeholder{color:#8d99a8}
+
+/* status */
+.status-row{border-top:1px solid var(--border);padding:.5rem .9rem;color:var(--muted)}
+
+/* ===== Alternatives ===== */
+.alt{display:flex;flex-direction:column}
+.alt-head{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1rem;border-bottom:1px solid var(--border)}
+.alt-head h2{margin:0;font-size:1rem}
+.hint{color:var(--muted);font-size:.9rem}
+.alt-list{list-style:none;margin:0;padding:1rem;display:grid;gap:.6rem}
+.alt-item{
+  border:1px solid var(--border);background:#0f1623;border-radius:.6rem;
+  padding:.6rem .7rem;cursor:pointer
+}
+.alt-item:hover{background:#111b23}
+.alt-title{display:flex;gap:.6rem;align-items:center}
+.alt-title .alt-score{color:var(--muted);font-size:.85rem}
+.alt-body{color:var(--text);margin:.35rem 0}
+.alt-meta{color:var(--muted);font-size:.85rem}
+
+/* ===== Footer ===== */
+.footer{padding:1rem;border-top:1px solid var(--border);color:var(--muted);text-align:center}
+
+/* ===== Feedback (chat-only) ===== */
+.msg.bot .bubble .feedback-bar{
+  display:inline-flex;align-items:center;gap:8px;margin-top:6px
+}
+.feedback-btn{
+  padding:.25rem .55rem;border:1px solid var(--border);border-radius:10px;
+  background:#0e1318;color:var(--text);cursor:pointer;font-size:.95rem;line-height:1
+}
+.feedback-btn:hover{border-color:#314257}
+.feedback-btn:disabled{opacity:.6;cursor:default}
+.feedback-status{color:#9aa3b2;font-size:.9rem}
+
+/* ===== Responsive ===== */
+@media (max-width: 1000px){ .grid{grid-template-columns:1fr} .chat-log{height:55vh} }
