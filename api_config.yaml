@@ -1,0 +1,15 @@
+# server/api_config.yaml
+data:
+  csv_path: data/QA.csv
+
+columns:
+  question: "คำถาม "
+  answer: "คำตอบ"
+  module: "Module"
+
+index:
+  corpus_pkl: outputs/corpus_embeds.pkl
+
+runtime:
+  onnx_dir: onnx_path
+  tokenizer_dir: onnx_path
