@@ -1,16 +1,12 @@
-# Demo_FastAPI — Retriever API (ONNX + TF‑IDF + Guardrails)
----
 ## 0) โครงสร้างของโปรเจค
-```
+
 ......\
-├─ Demo_FastAPI\         # โปรเจกต์ API + Web UI
+├─ FAST-API_ONNX\         # โปรเจกต์ API + Web UI
 └─ Demo_Onnx\            # โปรเจกต์ฝั่งโมเดล/ONNX และไฟล์ดัชนี
-```
 
-**สิ่งที่ต้องมีใน Demo_Onnx**
+**สิ่งที่ต้องมีใน Onnx-export_script**
 
-```
-Demo_Onnx\
+Onnx-export_script\
 ├─ onnx_path\
 │   ├─ encoder.onnx
 │   ├─ tokenizer.json
@@ -18,7 +14,6 @@ Demo_Onnx\
 │   └─ special_tokens_map.json
 └─ outputs\
     └─ corpus_embeds.pkl   # แนะนำให้เป็น numpy.ndarray 2D (N,D) dtype=float32
-```
 
 > หาก `corpus_embeds.pkl` ยังไม่ใช่เมทริกซ์ 2D ให้แปลงก่อน (ดูหัวข้อ “แก้ปัญหา” → **แปลง index ให้เป็น ndarray 2D**)
 
@@ -26,9 +21,8 @@ Demo_Onnx\
 
 ## 1) ความต้องการระบบ (Requirements)
 
-**Python 3.10 – 3.12** และแพ็กเกจหลัก:
+**Python 3.10 – 3.12** และแพ็กเกจหลัก
 
-```
 fastapi>=0.111
 uvicorn[standard]>=0.30
 numpy>=1.26
@@ -37,18 +31,17 @@ scikit-learn>=1.3
 pyyaml>=6.0
 onnxruntime>=1.17           # ถ้าใช้ GPU: ติดตั้ง onnxruntime-gpu ให้ตรง CUDA
 transformers>=4.40
-```
 
 ---
 
-## 2) ไฟล์สำคัญใน Demo_FastAPI
+## 2) ไฟล์สำคัญใน FAST-API_ONNX
 
 - `app.py` — โค้ด FastAPI + Simple ONNX Encoder + Hybrid Retrieval + Guardrails
 - `frontend/index.html`, `frontend/static/css/style.css`, `frontend/static/js/app.js` — หน้าเว็บ/สคริปต์
 - *(ไม่บังคับ)* `data/user_feedback.csv` — จะสร้างอัตโนมัติเมื่อมีการส่งฟีดแบ็ก
 - *(ไม่บังคับ)* `outputs/` — เว้นไว้ได้ หากชี้ index ไปที่ Demo_Onnx
 
-**ไม่จำเป็นต้อง** ก็อปปี้ `encoder.onnx` หรือ tokenizer มาไว้ใน Demo_FastAPI — ชี้พาธไปที่ Demo_Onnx ก็พอ
+**ไม่จำเป็น** ก็อปปี้ `encoder.onnx` หรือ tokenizer มาไว้ใน Demo_FastAPI — ชี้พาธไปที่ Demo_Onnx ก็พอ
 
 ---
 
@@ -56,7 +49,7 @@ transformers>=4.40
 
 วางไฟล์ `api_config.yaml` ไว้รากของ Demo_FastAPI แล้วปรับพาธตามจริง:
 
-```yaml
+yaml:
 # api_config.yaml (ตัวอย่าง)
 data:
   csv_path: ../Demo_Onnx/data/QA.csv
@@ -71,7 +64,6 @@ runtime:
 
 feedback:
   csv_path: data/user_feedback.csv
-```
 
 > ใน `app.py` เวอร์ชันล่าสุด: ระบบอ่านค่า **จาก YAML ก่อน** แล้วจึงเปิดโอกาสให้ ENV override (ถ้าจำเป็นในอนาคต)
 
@@ -82,13 +74,12 @@ feedback:
 ### 4.1 สร้าง virtual environment และติดตั้งแพ็กเกจ
 
 **Windows (PowerShell/CMD):**
-```bat
 cd ......\Demo_FastAPI
 python -m venv .venv
 .venv\Scripts\activate
 pip install -U pip
 pip install fastapi uvicorn[standard] numpy pandas scikit-learn pyyaml onnxruntime transformers
-```
+
 > หรือวาง `requirements.txt` ด้วยแพ็กเกจชุดเดียวกัน แล้ว `pip install -r requirements.txt`
 
 ### 4.2 ตั้งค่า `api_config.yaml`
@@ -96,11 +87,11 @@ pip install fastapi uvicorn[standard] numpy pandas scikit-learn pyyaml onnxrunti
 - ให้ `index.corpus_pkl` ชี้ไปไฟล์เมทริกซ์เวกเตอร์ 2D (N,D)
 
 ### 4.3 รันเซิร์ฟเวอร์
-```bash
+
 uvicorn app:app --host 0.0.0.0 --port 8000 --reload
-```
+PowerShell:
 เปิดเบราว์เซอร์: `http://localhost:8000/`  
-กด “ตรวจสุขภาพ” หรือเรียก `GET /health` เพื่อตรวจสถานะ
+เรียก `GET /health` เพื่อตรวจสถานะ
 
 ---
 
@@ -175,7 +166,7 @@ uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 
 ---
 
-## 7) การปรับแต่งสำคัญ
+## 7) Config
 
 - **alpha (0..1)**: ยิ่งสูง ยิ่งพึ่ง **cosine** จาก ONNX มากขึ้น
 - **min_score**: กรองผลลัพธ์ที่คะแนนต่ำ
@@ -196,8 +187,8 @@ uvicorn app:app --host 0.0.0.0 --port 8000 --reload
 - ถ้ายังเป็น dict/df ให้แปลงก่อน (หัวข้อถัดไป)
 
 ### 8.3 แปลง index ให้เป็น ndarray 2D (ถ้าจำเป็น)
-ตัวอย่างสคริปต์หนึ่งบรรทัด (ปรับพาธตามจริง):
-```bash
+ตัวอย่างสคริปต์ (ปรับพาธตามจริง):
+
 python - << "PY"
 import pandas as pd, numpy as np
 p = r"../Demo_Onnx/outputs/corpus_embeds.pkl"
@@ -222,7 +213,6 @@ arr = np.asarray(arr, dtype=np.float32)
 pd.to_pickle(arr, p)
 print("saved:", arr.shape, arr.dtype, "->", p)
 PY
-```
 
 ### 8.4 หน้าเว็บไม่มี CSS/JS
 - ตรวจว่าไฟล์อยู่ที่ `frontend/static/css/style.css` และ `frontend/static/js/app.js`
